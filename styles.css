@@ -6,6 +6,24 @@
   --line: #dce2f2;
   --primary: #2563eb;
   --danger: #dc2626;
+  --bg-grad-a: #dbe8ff;
+  --bg-grad-b: #e8fff4;
+  --surface-soft: #fbfcff;
+  --toast-bg: rgba(24, 32, 51, 0.9);
+}
+
+:root[data-theme="dark"] {
+  --bg: #0b1220;
+  --panel: #131c30;
+  --text: #e6ecff;
+  --muted: #9fb0d9;
+  --line: #25314b;
+  --primary: #4f8cff;
+  --danger: #ff6b6b;
+  --bg-grad-a: #1a2a4a;
+  --bg-grad-b: #163530;
+  --surface-soft: #111a2b;
+  --toast-bg: rgba(12, 18, 32, 0.95);
 }
 
 * {
@@ -17,15 +35,23 @@ body {
   font-family: "Noto Sans KR", "Malgun Gothic", sans-serif;
   color: var(--text);
   background:
-    radial-gradient(circle at 20% 0%, #dbe8ff 0, transparent 36%),
-    radial-gradient(circle at 90% 30%, #e8fff4 0, transparent 32%),
+    radial-gradient(circle at 20% 0%, var(--bg-grad-a) 0, transparent 36%),
+    radial-gradient(circle at 90% 30%, var(--bg-grad-b) 0, transparent 32%),
     var(--bg);
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 .container {
   max-width: 920px;
   margin: 0 auto;
   padding: 28px 16px 48px;
+}
+
+.header-top {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 10px;
 }
 
 .header h1 {
@@ -67,6 +93,8 @@ input {
   border-radius: 10px;
   padding: 0 12px;
   font-size: 15px;
+  color: var(--text);
+  background: var(--panel);
 }
 
 .button-row {
@@ -80,7 +108,7 @@ input {
   border-radius: 10px;
   border: 1px solid var(--line);
   padding: 0 14px;
-  background: #f8faff;
+  background: var(--surface-soft);
   color: var(--text);
   cursor: pointer;
 }
@@ -93,6 +121,10 @@ input {
 
 .btn.danger {
   color: var(--danger);
+}
+
+.theme-btn {
+  white-space: nowrap;
 }
 
 .section-head {
@@ -125,7 +157,7 @@ input {
   padding: 10px;
   border: 1px solid var(--line);
   border-radius: 12px;
-  background: #fbfcff;
+  background: var(--surface-soft);
 }
 
 .set-title {
@@ -172,7 +204,7 @@ input {
   border-radius: 10px;
   padding: 10px;
   font-size: 14px;
-  background: #fbfcff;
+  background: var(--surface-soft);
 }
 
 .toast {
@@ -180,7 +212,7 @@ input {
   left: 50%;
   bottom: 20px;
   transform: translateX(-50%);
-  background: rgba(24, 32, 51, 0.9);
+  background: var(--toast-bg);
   color: #fff;
   padding: 10px 12px;
   border-radius: 10px;
@@ -195,6 +227,11 @@ input {
 }
 
 @media (max-width: 600px) {
+  .header-top {
+    align-items: flex-start;
+    flex-direction: column;
+  }
+
   .set {
     flex-direction: column;
     align-items: flex-start;

@@ -4,8 +4,10 @@ const $result = document.getElementById("result");
 const $history = document.getElementById("history");
 const $historyCount = document.getElementById("historyCount");
 const $toast = document.getElementById("toast");
+const $themeToggle = document.getElementById("themeToggle");
 
 const HISTORY_KEY = "lotto_history_v2";
+const THEME_KEY = "lotto_theme_v1";
 
 function xmur3(str) {
   let h = 1779033703 ^ str.length;
@@ -194,11 +196,37 @@ function clearHistory() {
   toast("기록을 삭제했습니다.");
 }
 
+function applyTheme(theme) {
+  const nextTheme = theme === "dark" ? "dark" : "light";
+  document.documentElement.dataset.theme = nextTheme;
+  $themeToggle.textContent = nextTheme === "dark" ? "화이트모드" : "다크모드";
+}
+
+function initTheme() {
+  const saved = localStorage.getItem(THEME_KEY);
+  if (saved === "dark" || saved === "light") {
+    applyTheme(saved);
+    return;
+  }
+
+  const systemPrefersDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+  applyTheme(systemPrefersDark ? "dark" : "light");
+}
+
+function toggleTheme() {
+  const current = document.documentElement.dataset.theme === "dark" ? "dark" : "light";
+  const next = current === "dark" ? "light" : "dark";
+  applyTheme(next);
+  localStorage.setItem(THEME_KEY, next);
+}
+
 document.getElementById("generateBtn").addEventListener("click", generate);
 document.getElementById("copyBtn").addEventListener("click", copyResult);
 document.getElementById("clearBtn").addEventListener("click", clearHistory);
+$themeToggle.addEventListener("click", toggleTheme);
 $seed.addEventListener("keydown", (event) => {
   if (event.key === "Enter") generate();
 });
 
+initTheme();
 renderHistory();
